@@ -537,6 +537,78 @@
             text-align: center;
         }
 
+        /* Clients Section */
+        #clients {
+            background-color: var(--swiss-black);
+            padding: 6rem 0;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2.5rem 2rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .testimonial-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-3);
+            border-color: var(--secondary);
+        }
+
+        .quote-icon {
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .quote-icon i {
+            font-size: 3rem;
+            opacity: 0.3;
+        }
+
+        .testimonial-text {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-style: italic;
+        }
+
+        .client-info {
+            margin-bottom: 1rem;
+        }
+
+        .client-info h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+            color: var(--swiss-white);
+        }
+
+        .client-info p {
+            font-size: 0.95rem;
+            color: var(--secondary-light);
+            margin-bottom: 0;
+        }
+
+        .stars {
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        .stars i {
+            font-size: 1.2rem;
+            color: #ffd700;
+        }
+
         /* About */
         .team-grid {
             display: grid;
@@ -635,12 +707,12 @@
         }
         
         .contact-info p {
-            color: rgba(255, 255, 255, 0.85);
+            color: rgba(255, 255, 255, 0.95);
         }
 
         .contact-detail {
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             margin-bottom: 1.5rem;
         }
 
@@ -650,11 +722,14 @@
             margin-right: 1rem;
             width: 24px;
             flex-shrink: 0;
-            margin-top: 2px;
+            margin-bottom: 5px;
         }
 
         .contact-detail p {
             margin-bottom: 0;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 1);
+            font-weight: 500;
         }
 
         .contact-form {
@@ -1155,6 +1230,69 @@
         </div>
     </section>
 
+    <!-- Clients Section -->
+    <section id="clients">
+        <div class="container">
+            <div class="section-title">
+                <h2>What Our Clients Say</h2>
+                <p>Don't just take our word for it. Here's what our clients have to say about working with us.</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="quote-icon">
+                        <i class="material-icons">format_quote</i>
+                    </div>
+                    <p class="testimonial-text">"Crafted Clipz transformed our social media presence with stunning video content. Their creative approach and attention to detail exceeded our expectations!"</p>
+                    <div class="client-info">
+                        <h4>Priya Sharma</h4>
+                        <p>Marketing Director, TechVision</p>
+                    </div>
+                    <div class="stars">
+                        <i class="material-icons">star</i>
+                        <i class="material-icons">star</i>
+                        <i class="material-icons">star</i>
+                        <i class="material-icons">star</i>
+                        <i class="material-icons">star</i>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="quote-icon">
+                        <i class="material-icons">format_quote</i>
+                    </div>
+                    <p class="testimonial-text">"The team's expertise in digital marketing helped us increase our online sales by 200%. Highly professional and results-driven!"</p>
+                    <div class="client-info">
+                        <h4>Rajesh Kumar</h4>
+                        <p>CEO, E-Shop India</p>
+                    </div>
+                    <div class="stars">
+                        <i class="material-icons">star</i>
+                        <i class="material-icons">star</i>
+                        <i class="material-icons">star</i>
+                        <i class="material-icons">star</i>
+                        <i class="material-icons">star</i>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="quote-icon">
+                        <i class="material-icons">format_quote</i>
+                    </div>
+                    <p class="testimonial-text">"Outstanding branding and design work! They captured our vision perfectly and delivered a brand identity that truly represents who we are."</p>
+                    <div class="client-info">
+                        <h4>Ananya Reddy</h4>
+                        <p>Founder, Bloom Boutique</p>
+                    </div>
+                    <div class="stars">
+                        <i class="material-icons">star</i>
+                        <i class="material-icons">star</i>
+                        <i class="material-icons">star</i>
+                        <i class="material-icons">star</i>
+                        <i class="material-icons">star</i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Contact Section -->
     <section id="contact" class="contact">
         <div class="container">
@@ -1172,7 +1310,7 @@
                     </div>
                     <div class="contact-detail">
                         <i class="material-icons">place</i>
-                        <p>Nagercoil, Kerala</p>
+                        <p >Nagercoil, Kerala</p>
                     </div>
                     <div class="social-links">
                         <a href="https://www.linkedin.com/in/crafted-clipz-baa443321/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
@@ -1327,7 +1465,7 @@
             }, observerOptions);
             
             // Observe service cards, portfolio items, and team cards
-            document.querySelectorAll('.service-card, .portfolio-item, .team-card, .feature-item').forEach(item => {
+            document.querySelectorAll('.service-card, .portfolio-item, .team-card, .feature-item, .testimonial-card').forEach(item => {
                 item.style.opacity = '0';
                 observer.observe(item);
             });
