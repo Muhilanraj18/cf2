@@ -1346,7 +1346,13 @@
                         <p >Nagercoil, Kerala</p>
                     </div>
                 </div>
-                <form class="contact-form" id="contactForm">
+                <form class="contact-form" id="contactForm" action="https://formsubmit.co/craftedclipz@gmail.com" method="POST">
+                    <!-- FormSubmit Configuration -->
+                    <input type="hidden" name="_subject" value="New Contact Form Submission from Crafted Clipz">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_template" value="table">
+                    <input type="hidden" name="_next" value="https://muhilanraj18.github.io/cf2/index.html#contact">
+                    
                     <div class="form-group">
                         <input type="text" class="form-input" placeholder=" " id="name" name="name" required>
                         <label for="name" class="form-label">Your Name</label>
@@ -1519,23 +1525,11 @@
                 contactForm.addEventListener('submit', function(e) {
                     e.preventDefault();
                     
-                    // Get form values
-                    const name = document.getElementById('name').value;
-                    const email = document.getElementById('email').value;
-                    const subject = document.getElementById('subject').value;
-                    const message = document.getElementById('message').value;
+                    // Get form data
+                    const formData = new FormData(contactForm);
                     
-                    // Create FormData for submission
-                    const formData = new FormData();
-                    formData.append('name', name);
-                    formData.append('email', email);
-                    formData.append('subject', subject);
-                    formData.append('message', message);
-                    formData.append('to', 'craftedclipz@gmail.com');
-                    
-                    // For demo purposes, we'll use FormSubmit.co service
-                    // You can replace this with your own backend endpoint
-                    fetch('https://formsubmit.co/craftedclipz@gmail.com', {
+                    // Submit form using fetch
+                    fetch(contactForm.action, {
                         method: 'POST',
                         body: formData,
                         headers: {
@@ -1555,16 +1549,14 @@
                                 successMessage.classList.remove('show');
                             }, 5000);
                         } else {
-                            throw new Error('Form submission failed');
+                            return response.json().then(data => {
+                                throw new Error(data.message || 'Form submission failed');
+                            });
                         }
                     })
                     .catch(error => {
                         console.error('Error:', error);
-                        // Fallback to mailto if form submission fails
-                        const mailtoLink = `mailto:craftedclipz@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(
-                            `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`
-                        )}`;
-                        window.location.href = mailtoLink;
+                        alert('There was an error sending your message. Please try again or contact us directly at craftedclipz@gmail.com');
                     });
                 });
             }
