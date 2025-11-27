@@ -790,24 +790,41 @@
         .social-links {
             display: flex;
             margin: 1.5rem 0;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
         }
 
         .social-links a {
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 44px;
-            height: 44px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.1);
             color: var(--swiss-white);
-            margin-right: 0.75rem;
             transition: var(--transition);
+            text-decoration: none;
+            position: relative;
+        }
+
+        .social-links a i {
+            font-size: 1.3rem;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
 
         .social-links a:hover {
             background: var(--secondary);
-            transform: translateY(-3px);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-3);
+        }
+
+        .social-links a:hover i {
+            transform: translate(-50%, -50%);
         }
 
         .copyright {
