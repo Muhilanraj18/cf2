@@ -3,10 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crafted Clipz | Swiss-Inspired Freelance Agency</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <meta name="description" content="Crafted Clipz - Full-service digital marketing agency. Content creation, branding, SEO, web development, and performance marketing.">
+    <title>Crafted Clipz | Full-Service Digital Marketing Agency</title>
+    
+    <!-- Preconnect to external domains for faster loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    
+    <!-- DNS Prefetch for external resources -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <style>
         :root {
             /* Material Design Color System */
@@ -47,12 +58,22 @@
             box-sizing: border-box;
         }
 
+        /* Performance optimization: Use will-change for animated elements */
+        .btn, .service-card, .portfolio-item, .team-card, .social-links a {
+            will-change: transform;
+        }
+
         body {
             font-family: 'Inter', 'Roboto', sans-serif;
             background-color: var(--swiss-black);
             color: var(--swiss-white);
             line-height: 1.6;
             letter-spacing: -0.25px;
+        }
+
+        /* Lazy loading images */
+        img {
+            content-visibility: auto;
         }
 
         /* Container */
@@ -223,12 +244,16 @@
         .hero-content {
             max-width: 1200px;
             margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
+            display: flex;
+            justify-content: center;
             align-items: center;
+            text-align: center;
             position: relative;
             z-index: 2;
+        }
+
+        .hero-content > div {
+            max-width: 900px;
         }
 
         .hero h1 {
@@ -401,6 +426,54 @@
             color: rgba(255, 255, 255, 0.85);
         }
 
+        /* About Section */
+        .about-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about-text p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .about-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: var(--transition);
+        }
+
+        .feature-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-3px);
+        }
+
+        .feature-item i {
+            color: var(--secondary);
+            font-size: 1.5rem;
+        }
+
+        .feature-item span {
+            font-weight: 500;
+            font-size: 1.05rem;
+        }
+
         /* Portfolio */
         .portfolio {
             background-color: #0a1929;
@@ -567,7 +640,7 @@
 
         .contact-detail {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             margin-bottom: 1.5rem;
         }
 
@@ -576,6 +649,12 @@
             color: var(--primary);
             margin-right: 1rem;
             width: 24px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .contact-detail p {
+            margin-bottom: 0;
         }
 
         .contact-form {
@@ -898,7 +977,7 @@
     <nav>
         <div class="container nav-container">
             <a href="#" class="logo">
-                <img src="clea white.png" alt="Crafted Clipz" style="height: 40px; margin-right: 10px;">
+                <img src="clea white.png" alt="Crafted Clipz" style="height: 60px; margin-right: 10px;">
                 Crafted Clipz
             </a>
             <button class="menu-toggle">
@@ -906,6 +985,7 @@
             </button>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
                 <li><a href="#services">Services</a></li>
                 <li><a href="#portfolio">Portfolio</a></li>
                 <li><a href="#contact">Contact</a></li>
@@ -915,20 +995,51 @@
 
     <!-- Hero Section -->
     <section class="hero" id="home">
-        <video class="hero-video" autoplay muted loop playsinline>
+        <video class="hero-video" autoplay muted loop playsinline preload="metadata">
             <source src="20911-313314375.mp4" type="video/mp4">
         </video>
         <div class="container hero-content">
             <div>
-                <h1>Precision Design for Modern Brands</h1>
-                <p>Swiss-inspired digital solutions with material design principles. We create elegant, functional experiences that help brands stand out.</p>
+                <h1>Full-Service Digital Marketing for Modern Brands</h1>
+                <p>We create high-impact content, strategic ads, and complete marketing systems that help businesses scale faster.</p>
                 <div>
                     <a href="#contact" class="btn btn-large">Start a Project</a>
                     <a href="#portfolio" class="btn btn-outline btn-large">View Work</a>
                 </div>
             </div>
-            <div class="hero-image">
-                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Agency Work">
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>About Crafted Clipz</h2>
+                <p>Your full-service partner for digital success</p>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Crafted Clipz is an end-to-end digital marketing agency delivering everything from content creation and branding to performance marketing and complete growth strategy.</p>
+                    <p>We help businesses build visibility, attract customers, and scale with data-driven campaigns and high-quality creative solutions.</p>
+                    <div class="about-features">
+                        <div class="feature-item">
+                            <i class="material-icons">check_circle</i>
+                            <span>End-to-End Solutions</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="material-icons">check_circle</i>
+                            <span>Data-Driven Strategies</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="material-icons">check_circle</i>
+                            <span>High-Quality Creative</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="material-icons">check_circle</i>
+                            <span>Performance Marketing</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -1003,21 +1114,21 @@
             </div>
             <div class="portfolio-grid">
                 <div class="portfolio-item">
-                    <img src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80" alt="Finance Dashboard" class="portfolio-img">
+                    <img src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1169&q=80" alt="Finance Dashboard" class="portfolio-img" loading="lazy">
                     <div class="portfolio-overlay">
                         <h3>Finance Dashboard</h3>
                         <p>UX Design, Web Development</p>
                     </div>
                 </div>
                 <div class="portfolio-item">
-                    <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="E-commerce Platform" class="portfolio-img">
+                    <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="E-commerce Platform" class="portfolio-img" loading="lazy">
                     <div class="portfolio-overlay">
                         <h3>E-commerce Platform</h3>
                         <p>UI Design, Full Stack Development</p>
                     </div>
                 </div>
                 <div class="portfolio-item">
-                    <img src="https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1139&q=80" alt="Mobile App" class="portfolio-img">
+                    <img src="https://images.unsplash.com/photo-1611224923853-80b023f02d71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1139&q=80" alt="Mobile App" class="portfolio-img" loading="lazy">
                     <div class="portfolio-overlay">
                         <h3>Fitness Tracking App</h3>
                         <p>UI/UX Design, iOS & Android Development</p>
@@ -1047,10 +1158,10 @@
                         <p>Nagercoil, Kerala</p>
                     </div>
                     <div class="social-links">
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#"><i class="fab fa-dribbble"></i></a>
-                        <a href="#"><i class="fab fa-behance"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.linkedin.com/in/crafted-clipz-baa443321/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.threads.com/@craftedclipz" target="_blank" title="Threads"><i class="fab fa-threads"></i></a>
+                        <a href="https://www.instagram.com/craftedclipz/" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://x.com/Craftedclipz" target="_blank" title="X (Twitter)"><i class="fab fa-x-twitter"></i></a>
                     </div>
                 </div>
                 <div class="contact-form">
@@ -1088,31 +1199,32 @@
                     <a href="#" class="footer-logo">Crafted Clipz</a>
                     <p>Swiss-inspired digital agency creating precise, functional, and beautiful design solutions for forward-thinking brands.</p>
                     <div class="social-links">
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#"><i class="fab fa-dribbble"></i></a>
-                        <a href="#"><i class="fab fa-behance"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.linkedin.com/in/crafted-clipz-baa443321/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.threads.com/@craftedclipz" target="_blank" title="Threads"><i class="fab fa-threads"></i></a>
+                        <a href="https://www.instagram.com/craftedclipz/" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://x.com/Craftedclipz" target="_blank" title="X (Twitter)"><i class="fab fa-x-twitter"></i></a>
                     </div>
                 </div>
                 <div>
                     <h4 class="footer-heading">Services</h4>
                     <ul class="footer-links">
-                        <li><a href="#">Branding</a></li>
-                        <li><a href="#">Motion Graphics</a></li>
-                        <li><a href="#">SEO</a></li>
-                        <li><a href="#">Web Design/Development</a></li>
-                        <li><a href="#">Digital Marketing</a></li>
-                        <li><a href="#">Video Ads</a></li>
-                        <li><a href="#">Design and Strategy</a></li>
+                        <li><a href="#services">Branding</a></li>
+                        <li><a href="#services">Motion Graphics</a></li>
+                        <li><a href="#services">SEO</a></li>
+                        <li><a href="#services">Web Design/Development</a></li>
+                        <li><a href="#services">Digital Marketing</a></li>
+                        <li><a href="#services">Video Ads</a></li>
+                        <li><a href="#services">Design and Strategy</a></li>
                     </ul>
                 </div>
                 <div>
                     <h4 class="footer-heading">Company</h4>
                     <ul class="footer-links">
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#portfolio">Portfolio</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#home">Privacy Policy</a></li>
                     </ul>
                 </div>
             </div>
@@ -1198,9 +1310,19 @@
             }, observerOptions);
             
             // Observe service cards, portfolio items, and team cards
-            document.querySelectorAll('.service-card, .portfolio-item, .team-card').forEach(item => {
+            document.querySelectorAll('.service-card, .portfolio-item, .team-card, .feature-item').forEach(item => {
                 item.style.opacity = '0';
                 observer.observe(item);
+            });
+
+            // Defer non-critical resource loading
+            window.addEventListener('load', function() {
+                // Preload critical resources
+                const preloadLink = document.createElement('link');
+                preloadLink.rel = 'preload';
+                preloadLink.as = 'video';
+                preloadLink.href = '20911-313314375.mp4';
+                document.head.appendChild(preloadLink);
             });
         });
     </script>
