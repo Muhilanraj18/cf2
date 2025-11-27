@@ -1319,29 +1319,29 @@
                         <a href="https://x.com/Craftedclipz" target="_blank" title="X (Twitter)"><i class="fab fa-x-twitter"></i></a>
                     </div>
                 </div>
-                <div class="contact-form">
+                <form class="contact-form" id="contactForm">
                     <div class="form-group">
-                        <input type="text" class="form-input" placeholder=" " id="name">
+                        <input type="text" class="form-input" placeholder=" " id="name" name="name" required>
                         <label for="name" class="form-label">Your Name</label>
                         <span class="highlight"></span>
                     </div>
                     <div class="form-group">
-                        <input type="email" class="form-input" placeholder=" " id="email">
+                        <input type="email" class="form-input" placeholder=" " id="email" name="email" required>
                         <label for="email" class="form-label">Your Email</label>
                         <span class="highlight"></span>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-input" placeholder=" " id="subject">
+                        <input type="text" class="form-input" placeholder=" " id="subject" name="subject" required>
                         <label for="subject" class="form-label">Subject</label>
                         <span class="highlight"></span>
                     </div>
                     <div class="form-group">
-                        <textarea class="form-input" placeholder=" " id="message" style="height: 120px; resize: none;"></textarea>
+                        <textarea class="form-input" placeholder=" " id="message" name="message" style="height: 120px; resize: none;" required></textarea>
                         <label for="message" class="form-label">Your Message</label>
                         <span class="highlight"></span>
                     </div>
-                    <button class="btn">Send Message</button>
-                </div>
+                    <button type="submit" class="btn">Send Message</button>
+                </form>
             </div>
         </div>
     </section>
@@ -1479,6 +1479,34 @@
                 preloadLink.href = '20911-313314375.mp4';
                 document.head.appendChild(preloadLink);
             });
+
+            // Contact Form Submission
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Get form values
+                    const name = document.getElementById('name').value;
+                    const email = document.getElementById('email').value;
+                    const subject = document.getElementById('subject').value;
+                    const message = document.getElementById('message').value;
+                    
+                    // Create mailto link
+                    const mailtoLink = `mailto:craftedclipz@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(
+                        `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`
+                    )}`;
+                    
+                    // Open email client
+                    window.location.href = mailtoLink;
+                    
+                    // Show success message
+                    alert('Thank you for your message! Your email client will open to send the message.');
+                    
+                    // Reset form
+                    contactForm.reset();
+                });
+            }
         });
     </script>
 </body>
