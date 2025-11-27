@@ -809,6 +809,29 @@
             resize: vertical;
         }
 
+        /* Success Message */
+        .success-message {
+            display: none;
+            background: rgba(76, 175, 80, 0.15);
+            border: 2px solid #4caf50;
+            color: #4caf50;
+            padding: 1.25rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+            text-align: center;
+            font-weight: 500;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .success-message i {
+            margin-right: 0.5rem;
+            vertical-align: middle;
+        }
+
         /* Footer */
         footer {
             background: var(--swiss-black);
@@ -1345,6 +1368,10 @@
                         <span class="highlight"></span>
                     </div>
                     <button type="submit" class="btn">Send Message</button>
+                    <div class="success-message" id="successMessage">
+                        <i class="material-icons">check_circle</i>
+                        <span>Message sent successfully! We'll get back to you soon.</span>
+                    </div>
                 </form>
             </div>
         </div>
@@ -1486,6 +1513,8 @@
 
             // Contact Form Submission
             const contactForm = document.getElementById('contactForm');
+            const successMessage = document.getElementById('successMessage');
+            
             if (contactForm) {
                 contactForm.addEventListener('submit', function(e) {
                     e.preventDefault();
@@ -1496,19 +1525,47 @@
                     const subject = document.getElementById('subject').value;
                     const message = document.getElementById('message').value;
                     
-                    // Create mailto link
-                    const mailtoLink = `mailto:craftedclipz@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(
-                        `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`
-                    )}`;
+                    // Create FormData for submission
+                    const formData = new FormData();
+                    formData.append('name', name);
+                    formData.append('email', email);
+                    formData.append('subject', subject);
+                    formData.append('message', message);
+                    formData.append('to', 'craftedclipz@gmail.com');
                     
-                    // Open email client
-                    window.location.href = mailtoLink;
-                    
-                    // Show success message
-                    alert('Thank you for your message! Your email client will open to send the message.');
-                    
-                    // Reset form
-                    contactForm.reset();
+                    // For demo purposes, we'll use FormSubmit.co service
+                    // You can replace this with your own backend endpoint
+                    fetch('https://formsubmit.co/craftedclipz@gmail.com', {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            // Show success message
+                            successMessage.classList.add('show');
+                            
+                            // Reset form
+                            contactForm.reset();
+                            
+                            // Hide success message after 5 seconds
+                            setTimeout(() => {
+                                successMessage.classList.remove('show');
+                            }, 5000);
+                        } else {
+                            throw new Error('Form submission failed');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        // Fallback to mailto if form submission fails
+                        const mailtoLink = `mailto:craftedclipz@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(
+                            `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`
+                        )}`;
+                        window.location.href = mailtoLink;
+                    });
                 });
             }
         });
