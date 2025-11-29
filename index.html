@@ -205,14 +205,36 @@
             cursor: pointer;
         }
 
+        .menu-close {
+            display: none;
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: none;
+            border: none;
+            color: var(--swiss-white);
+            font-size: 2rem;
+            cursor: pointer;
+            z-index: 10;
+            transition: var(--transition);
+        }
+
+        .menu-close:hover {
+            color: var(--secondary);
+            transform: rotate(90deg);
+        }
+
         /* Hero Section */
         .hero {
             padding: 10rem 0 6rem;
-            background: linear-gradient(135deg, rgba(10, 25, 41, 0.8) 0%, rgba(21, 101, 192, 0.6) 100%);
+            background: linear-gradient(135deg, rgba(10, 25, 41, 0.95) 0%, rgba(21, 101, 192, 0.9) 100%);
             color: var(--swiss-white);
             text-align: left;
             position: relative;
             overflow: hidden;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
         }
 
         .hero::before {
@@ -226,19 +248,51 @@
             z-index: 1;
         }
 
-        .hero-video {
+        .graph-container {
             position: absolute;
             top: 50%;
             left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            transform: translateX(-50%) translateY(-50%);
+            transform: translate(-50%, -50%);
+            width: 95%;
+            max-width: 1400px;
+            height: 600px;
             z-index: 0;
-            object-fit: cover;
-            opacity: 1;
-            filter: brightness(2);
+            opacity: 0.3;
+        }
+
+        .icon-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .icon-node {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            transform: translate(-50%, -50%) scale(0);
+            cursor: pointer;
+            transition: transform 0.5s ease;
+        }
+
+        .icon-node svg { 
+            width: 100%; 
+            height: 100%; 
+        }
+
+        .tooltip {
+            position: fixed;
+            background: rgba(0,0,0,0.8);
+            color: #fff;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
         }
 
         .hero-content {
@@ -1013,24 +1067,34 @@
         }
 
         @media (max-width: 768px) {
+            .logo {
+                font-size: 0;
+            }
+            
+            .logo img {
+                margin-right: 0 !important;
+            }
+            
             .nav-links {
                 position: fixed;
-                top: 76px;
-                left: 0;
-                width: 100%;
+                top: 0;
+                right: 0;
+                width: 70%;
+                max-width: 300px;
+                height: 100vh;
                 flex-direction: column;
                 background: var(--swiss-black);
-                box-shadow: var(--shadow-2);
-                padding: 1rem 0;
-                transform: translateY(-100%);
+                box-shadow: var(--shadow-4);
+                padding: 5rem 0 1rem;
+                transform: translateX(100%);
                 opacity: 0;
                 pointer-events: none;
                 transition: var(--transition);
-                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                border-left: 1px solid rgba(255, 255, 255, 0.1);
             }
 
             .nav-links.active {
-                transform: translateY(0);
+                transform: translateX(0);
                 opacity: 1;
                 pointer-events: all;
             }
@@ -1048,6 +1112,10 @@
                 display: block;
             }
 
+            .menu-close {
+                display: block;
+            }
+
             h1 {
                 font-size: 2.5rem;
             }
@@ -1058,6 +1126,16 @@
 
             .hero {
                 padding: 7rem 0 4rem;
+            }
+
+            .graph-container { 
+                height: 400px;
+                max-width: 1000px;
+            }
+            
+            .icon-node { 
+                width: 50px; 
+                height: 50px; 
             }
 
             section {
@@ -1109,6 +1187,9 @@
                 <i class="material-icons">menu</i>
             </button>
             <ul class="nav-links">
+                <button class="menu-close">
+                    <i class="material-icons">close</i>
+                </button>
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#services">Services</a></li>
@@ -1120,9 +1201,72 @@
 
     <!-- Hero Section -->
     <section class="hero" id="home">
-        <video class="hero-video" autoplay muted loop playsinline preload="metadata">
-            <source src="20911-313314375.mp4" type="video/mp4">
-        </video>
+        <div class="graph-container">
+            <svg class="icon-lines" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#FF5F6D"/>
+                        <stop offset="100%" stop-color="#FFC371"/>
+                    </linearGradient>
+                </defs>
+            </svg>
+
+            <!-- Digital Marketing Icons -->
+            <div class="icon-node" style="top:60%; left:10%;" data-tooltip="Instagram">
+                <svg viewBox="0 0 50 50">
+                    <rect x="5" y="5" width="40" height="40" rx="10" fill="#E1306C"/>
+                    <circle cx="25" cy="25" r="10" fill="#fff"/>
+                    <circle cx="35" cy="15" r="3" fill="#fff"/>
+                </svg>
+            </div>
+
+            <div class="icon-node" style="top:40%; left:25%;" data-tooltip="Video">
+                <svg viewBox="0 0 64 32">
+                    <rect x="2" y="14" width="60" height="4" rx="0" fill="#00A8FF"/>
+                    <polygon points="50,8 50,24 62,16" fill="#fff"/>
+                </svg>
+            </div>
+
+            <div class="icon-node" style="top:50%; left:40%;" data-tooltip="Analytics">
+                <svg viewBox="0 0 50 50">
+                    <line x1="10" y1="35" x2="20" y2="25" stroke="#3DDC84" stroke-width="2"/>
+                    <line x1="20" y1="25" x2="30" y2="30" stroke="#3DDC84" stroke-width="2"/>
+                    <line x1="30" y1="30" x2="40" y2="15" stroke="#3DDC84" stroke-width="2"/>
+                    <circle cx="10" cy="35" r="2" fill="#3DDC84"/>
+                    <circle cx="20" cy="25" r="2" fill="#3DDC84"/>
+                    <circle cx="30" cy="30" r="2" fill="#3DDC84"/>
+                    <circle cx="40" cy="15" r="2" fill="#3DDC84"/>
+                </svg>
+            </div>
+
+            <div class="icon-node" style="top:30%; left:55%;" data-tooltip="Email">
+                <svg viewBox="0 0 50 50">
+                    <rect x="5" y="15" width="40" height="20" fill="#FFD700"/>
+                    <polyline points="5,15 25,30 45,15" fill="none" stroke="#fff" stroke-width="2"/>
+                </svg>
+            </div>
+
+            <div class="icon-node" style="top:45%; left:70%;" data-tooltip="Content/Blog">
+                <svg viewBox="0 0 50 50">
+                    <rect x="10" y="10" width="30" height="30" fill="#FF6B6B"/>
+                    <line x1="15" y1="20" x2="35" y2="20" stroke="#fff" stroke-width="2"/>
+                    <line x1="15" y1="30" x2="35" y2="30" stroke="#fff" stroke-width="2"/>
+                </svg>
+            </div>
+
+            <div class="icon-node" style="top:35%; left:85%;" data-tooltip="Share">
+                <svg viewBox="0 0 50 50">
+                    <circle cx="25" cy="25" r="8" fill="#9B59B6"/>
+                    <line x1="25" y1="17" x2="25" y2="8" stroke="#fff" stroke-width="2"/>
+                    <line x1="25" y1="33" x2="25" y2="42" stroke="#fff" stroke-width="2"/>
+                    <line x1="17" y1="25" x2="8" y2="25" stroke="#fff" stroke-width="2"/>
+                    <line x1="33" y1="25" x2="42" y2="25" stroke="#fff" stroke-width="2"/>
+                </svg>
+            </div>
+
+            <div class="tooltip" id="tooltip"></div>
+        </div>
+
         <div class="container hero-content">
             <div>
                 <h1>Full-Service Digital Marketing for Modern Brands</h1>
@@ -1409,16 +1553,6 @@
                         <li><a href="#services">Design and Strategy</a></li>
                     </ul>
                 </div>
-                <div>
-                    <h4 class="footer-heading">Company</h4>
-                    <ul class="footer-links">
-                        <li><a href="#home">Home</a></li>
-                        <li><a href="#about">About Us</a></li>
-                        <li><a href="#portfolio">Portfolio</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                        <li><a href="#home">Privacy Policy</a></li>
-                    </ul>
-                </div>
             </div>
             <div class="copyright">
                 <p>© 2023 Crafted Clipz. All rights reserved.</p>
@@ -1434,6 +1568,91 @@
     <script>
         // Ripple effect for buttons
         document.addEventListener('DOMContentLoaded', function() {
+            // Digital Marketing Graph Animation
+            const svg = document.querySelector('.icon-lines');
+            const nodes = document.querySelectorAll('.icon-node');
+            const tooltip = document.getElementById('tooltip');
+
+            function getNodeCenter(node) {
+                const rect = node.getBoundingClientRect();
+                const containerRect = svg.getBoundingClientRect();
+                return { 
+                    x: rect.left + rect.width/2 - containerRect.left, 
+                    y: rect.top + rect.height/2 - containerRect.top 
+                };
+            }
+
+            function drawBezierLine() {
+                svg.innerHTML = `
+                    <defs>
+                        <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#FF5F6D"/>
+                            <stop offset="100%" stop-color="#FFC371"/>
+                        </linearGradient>
+                    </defs>
+                `;
+
+                const path = document.createElementNS('http://www.w3.org/2000/svg','path');
+                path.setAttribute('stroke','url(#lineGradient)');
+                path.setAttribute('stroke-width','4');
+                path.setAttribute('fill','none');
+                path.setAttribute('stroke-linecap','round');
+                path.setAttribute('stroke-linejoin','round');
+
+                let d = '';
+                nodes.forEach((node, i) => {
+                    const pos = getNodeCenter(node);
+                    if(i === 0) {
+                        d += `M ${pos.x} ${pos.y}`;
+                    } else {
+                        const prev = getNodeCenter(nodes[i-1]);
+                        const cx = (prev.x + pos.x)/2;
+                        const cy = (prev.y + pos.y)/2;
+                        d += ` Q ${cx} ${prev.y}, ${pos.x} ${pos.y}`;
+                    }
+                });
+
+                path.setAttribute('d', d);
+                const pathLength = path.getTotalLength();
+                path.setAttribute('stroke-dasharray', pathLength);
+                path.setAttribute('stroke-dashoffset', pathLength);
+                svg.appendChild(path);
+
+                path.animate([
+                    { strokeDashoffset: pathLength }, 
+                    { strokeDashoffset: 0 }
+                ], {
+                    duration: 2500, 
+                    easing: 'ease-out', 
+                    fill: 'forwards'
+                });
+
+                // Animate nodes sequentially
+                nodes.forEach((node,i) => {
+                    setTimeout(() => { 
+                        node.style.transform = 'translate(-50%,-50%) scale(1)'; 
+                    }, i * 400);
+                });
+            }
+
+            drawBezierLine();
+            window.addEventListener('resize', drawBezierLine);
+
+            // Tooltip functionality
+            nodes.forEach(node => {
+                node.addEventListener('mouseenter', e => {
+                    tooltip.textContent = node.dataset.tooltip;
+                    tooltip.style.opacity = '1';
+                });
+                node.addEventListener('mouseleave', e => {
+                    tooltip.style.opacity = '0';
+                });
+                node.addEventListener('mousemove', e => {
+                    tooltip.style.left = (e.pageX + 10) + 'px';
+                    tooltip.style.top = (e.pageY - 25) + 'px';
+                });
+            });
+
             // Add ripple effect to buttons
             const buttons = document.querySelectorAll('.btn');
             buttons.forEach(button => {
@@ -1456,10 +1675,15 @@
             
             // Mobile menu toggle
             const menuToggle = document.querySelector('.menu-toggle');
+            const menuClose = document.querySelector('.menu-close');
             const navLinks = document.querySelector('.nav-links');
             
             menuToggle.addEventListener('click', function() {
                 navLinks.classList.toggle('active');
+            });
+            
+            menuClose.addEventListener('click', function() {
+                navLinks.classList.remove('active');
             });
             
             // Smooth scrolling for navigation links
