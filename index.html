@@ -809,47 +809,20 @@
             font-weight: 500;
         }
 
-        .phone-actions {
-            display: flex;
-            gap: 1rem;
-            margin-top: 0.5rem;
-        }
-
-        .phone-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.6rem 1.25rem;
-            background: var(--secondary);
+        .contact-phone-link {
             color: var(--swiss-white);
             text-decoration: none;
-            border-radius: 25px;
-            font-size: 0.9rem;
+            font-size: 1.1rem;
             font-weight: 500;
             transition: var(--transition);
-            border: 2px solid var(--secondary);
+            display: inline-block;
+            padding: 0.5rem 0;
+            border-bottom: 2px solid transparent;
         }
 
-        .phone-link:hover {
-            background: var(--primary);
-            border-color: var(--primary);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-3);
-        }
-
-        .phone-link i {
-            font-size: 1.2rem;
-            margin: 0;
-        }
-
-        .phone-link.whatsapp {
-            background: #25D366;
-            border-color: #25D366;
-        }
-
-        .phone-link.whatsapp:hover {
-            background: #128C7E;
-            border-color: #128C7E;
+        .contact-phone-link:hover {
+            color: var(--secondary);
+            border-bottom-color: var(--secondary);
         }
 
         .contact-form {
@@ -1070,13 +1043,26 @@
             box-shadow: var(--shadow-3);
             cursor: pointer;
             transition: var(--transition);
-            z-index: 100;
+            z-index: 1001;
             border: none;
+            animation: fabPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes fabPulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: var(--shadow-3);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 8px 20px rgba(25, 118, 210, 0.4);
+            }
         }
 
         .fab:hover {
+            animation: none;
             box-shadow: var(--shadow-4);
-            transform: translateY(-5px) scale(1.05);
+            transform: translateY(-5px) scale(1.1);
         }
 
         .fab i {
@@ -1090,8 +1076,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(4px);
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
             z-index: 999;
             display: none;
             opacity: 0;
@@ -1107,21 +1093,27 @@
             position: fixed;
             bottom: 100px;
             right: 2rem;
-            width: 380px;
-            max-width: calc(100vw - 4rem);
-            height: 550px;
+            width: 400px;
+            max-width: calc(100vw - 2rem);
+            height: 600px;
+            max-height: calc(100vh - 150px);
             background: var(--swiss-black);
-            border-radius: 12px;
-            box-shadow: var(--shadow-4);
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
             display: none;
             flex-direction: column;
             z-index: 1000;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             overflow: hidden;
+            transform: scale(0.8) translateY(20px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .chatbot-container.active {
             display: flex;
+            transform: scale(1) translateY(0);
+            opacity: 1;
         }
 
         .chatbot-header {
@@ -1181,6 +1173,8 @@
             margin-bottom: 1rem;
             display: flex;
             gap: 0.75rem;
+            align-items: flex-start;
+            max-width: 100%;
         }
 
         .chatbot-message.bot {
@@ -1194,6 +1188,7 @@
         .message-avatar {
             width: 32px;
             height: 32px;
+            min-width: 32px;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -1208,20 +1203,22 @@
         }
 
         .message-avatar.user {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.15);
             color: var(--swiss-white);
         }
 
         .message-content {
-            max-width: 75%;
-            padding: 0.75rem 1rem;
-            border-radius: 12px;
-            font-size: 0.95rem;
-            line-height: 1.5;
+            max-width: 70%;
+            padding: 0.85rem 1.1rem;
+            border-radius: 16px;
+            font-size: 0.92rem;
+            line-height: 1.6;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
         .message-content.bot {
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.1);
             color: var(--swiss-white);
             border-bottom-left-radius: 4px;
         }
@@ -1371,16 +1368,43 @@
 
         @media (max-width: 576px) {
             .chatbot-overlay.active {
-                backdrop-filter: blur(2px);
+                backdrop-filter: blur(3px);
             }
 
             .chatbot-container {
-                bottom: 90px;
-                right: 1rem;
-                left: 1rem;
+                bottom: 80px;
+                right: 0.5rem;
+                left: 0.5rem;
                 width: auto;
                 max-width: none;
-                height: 500px;
+                height: 75vh;
+                max-height: 75vh;
+                border-radius: 12px;
+            }
+
+            .fab {
+                bottom: 1.5rem;
+                right: 1.5rem;
+                width: 56px;
+                height: 56px;
+            }
+
+            .fab i {
+                font-size: 1.6rem;
+            }
+
+            .message-content {
+                max-width: 80%;
+                font-size: 0.9rem;
+            }
+
+            .chatbot-header h3 {
+                font-size: 1rem;
+            }
+
+            .quick-reply-btn {
+                font-size: 0.8rem;
+                padding: 0.45rem 0.9rem;
             }
         }
 
@@ -1846,17 +1870,7 @@
                     <div class="contact-detail">
                         <i class="material-icons">phone</i>
                         <div>
-                            <p>+91 7418 167 906</p>
-                            <div class="phone-actions">
-                                <a href="tel:+917418167906" class="phone-link">
-                                    <i class="material-icons">call</i>
-                                    <span>Call Now</span>
-                                </a>
-                                <a href="https://wa.me/917418167906" target="_blank" class="phone-link whatsapp">
-                                    <i class="fab fa-whatsapp"></i>
-                                    <span>WhatsApp</span>
-                                </a>
-                            </div>
+                            <a href="tel:+917418167906" class="contact-phone-link">+91 7418 167 906</a>
                         </div>
                     </div>
                     <div class="contact-detail">
@@ -1864,7 +1878,7 @@
                         <p >Nagercoil, Kerala</p>
                     </div>
                 </div>
-                <form class="contact-form" id="contactForm" action="https://formsubmit.co/craftedclipz@gmail.com" method="POST">
+                <form class="contact-form" id="contactForm" action="https://formsubmit.co/info@craftedclipz.in" method="POST">
                     <!-- FormSubmit Configuration -->
                     <input type="hidden" name="_subject" value="New Contact Form Submission from Crafted Clipz">
                     <input type="hidden" name="_captcha" value="false">
@@ -2130,7 +2144,7 @@
                 
                 timeline: "Project timelines vary based on complexity:\n\n• Logo/Branding: 2-3 weeks\n• Website Design: 4-6 weeks\n• Video Production: 2-4 weeks\n• Full Marketing Campaign: 6-8 weeks\n• SEO Services: Ongoing (3-6 months for results)\n\nWe'll provide a detailed timeline during our initial consultation.",
                 
-                contact: "Great! Here's how to reach us:\n\n📞 Phone: +91 7418 167 906\n📍 Location: Nagercoil, Kerala\n📧 Email: craftedclipz@gmail.com\n\nYou can also fill out the contact form above, and we'll get back to you within 24 hours!",
+                contact: "Great! Here's how to reach us:\n\n📞 Phone: +91 7418 167 906\n📍 Location: Nagercoil, Kerala\n📧 Email: info@craftedclipz.in\n\nYou can also fill out the contact form above, and we'll get back to you within 24 hours!",
                 
                 process: "Our proven process ensures success:\n\n1️⃣ Discovery Call - Understanding your needs\n2️⃣ Strategy Development - Creating a custom plan\n3️⃣ Design & Development - Bringing ideas to life\n4️⃣ Review & Refinement - Your feedback matters\n5️⃣ Launch & Support - Ongoing assistance\n\nReady to get started?"
             };
@@ -2368,7 +2382,7 @@
                     })
                     .catch(error => {
                         console.error('Error:', error);
-                        alert('There was an error sending your message. Please try again or contact us directly at craftedclipz@gmail.com');
+                        alert('There was an error sending your message. Please try again or contact us directly at info@craftedclipz.in');
                     });
                 });
             }
