@@ -235,6 +235,19 @@
             min-height: 100vh;
             display: flex;
             align-items: center;
+            opacity: 0;
+            animation: heroFadeIn 1.2s ease-out forwards;
+        }
+
+        @keyframes heroFadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .hero::before {
