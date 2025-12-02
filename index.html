@@ -2077,11 +2077,7 @@
                         <p>Kochi, Kerala | Nagercoil, Kanyakumari</p>
                     </div>
                 </div>
-                <form class="contact-form" id="contactForm" action="https://formsubmit.co/info@craftedclipz.in" method="POST">
-                    <!-- FormSubmit Configuration -->
-                    <input type="hidden" name="_captcha" value="false">
-                    <input type="hidden" name="_template" value="table">
-                    
+                <form class="contact-form" id="contactForm" method="POST">
                     <div class="form-group">
                         <input type="text" class="form-input" placeholder=" " id="name" name="name" required>
                         <label for="name" class="form-label">Your Name</label>
@@ -2578,6 +2574,42 @@
                     }
                 }
             });
+            
+            // Contact Form Submission - Works locally with mailto
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Get form data
+                    const name = document.getElementById('name').value;
+                    const email = document.getElementById('email').value;
+                    const subject = document.getElementById('subject').value;
+                    const message = document.getElementById('message').value;
+                    
+                    // Create mailto link
+                    const mailtoBody = `Name: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0AMessage:%0D%0A${encodeURIComponent(message)}`;
+                    const mailtoLink = `mailto:info@craftedclipz.in?subject=${encodeURIComponent('Contact Form: ' + subject)}&body=${mailtoBody}`;
+                    
+                    // Open email client
+                    window.location.href = mailtoLink;
+                    
+                    // Show success message
+                    setTimeout(() => {
+                        successMessage.classList.add('show');
+                        contactForm.reset();
+                        
+                        // Remove has-value class from all inputs
+                        formInputs.forEach(input => {
+                            input.classList.remove('has-value');
+                        });
+                        
+                        // Hide success message after 5 seconds
+                        setTimeout(() => {
+                            successMessage.classList.remove('show');
+                        }, 5000);
+                    }, 500);
+                });
+            }
         });
     </script>
 </body>
