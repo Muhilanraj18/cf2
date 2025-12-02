@@ -292,26 +292,7 @@
             max-width: 1400px;
             height: 600px;
             z-index: 0;
-            opacity: 0.3;
-            animation: backgroundFloat 6s ease-in-out infinite;
-        }
-
-        @keyframes backgroundFloat {
-            0% {
-                transform: translate(-50%, -50%) scale(1) rotate(0deg);
-            }
-            25% {
-                transform: translate(-50%, -48%) scale(1.08) rotate(1deg);
-            }
-            50% {
-                transform: translate(-50%, -52%) scale(1.1) rotate(0deg);
-            }
-            75% {
-                transform: translate(-50%, -48%) scale(1.08) rotate(-1deg);
-            }
-            100% {
-                transform: translate(-50%, -50%) scale(1) rotate(0deg);
-            }
+            opacity: 0.25;
         }
 
         .icon-lines {
@@ -328,7 +309,27 @@
             height: 70px;
             transform: translate(-50%, -50%) scale(0);
             cursor: pointer;
-            transition: transform 0.5s ease;
+            transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+        }
+
+        .icon-node.animated {
+            animation: nodeAppear 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes nodeAppear {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 0;
+            }
+            70% {
+                transform: translate(-50%, -50%) scale(1.05);
+                opacity: 0.7;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
         }
 
         .icon-node svg { 
@@ -879,16 +880,26 @@
             padding: 1rem 0;
             border: none;
             border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            background: transparent;
+            background: transparent !important;
             font-size: 1rem;
             transition: var(--transition);
             font-family: 'Inter', sans-serif;
             color: var(--swiss-white);
         }
 
+        .form-input:-webkit-autofill,
+        .form-input:-webkit-autofill:hover,
+        .form-input:-webkit-autofill:focus,
+        .form-input:-webkit-autofill:active {
+            -webkit-box-shadow: 0 0 0 30px var(--swiss-black) inset !important;
+            -webkit-text-fill-color: var(--swiss-white) !important;
+            background: transparent !important;
+        }
+
         .form-input:focus {
             outline: none;
             border-bottom: 2px solid var(--primary);
+            background: transparent !important;
         }
 
         .form-label {
@@ -899,15 +910,23 @@
             transition: var(--transition);
             color: rgba(255, 255, 255, 0.5);
             font-weight: 400;
+            background: transparent;
         }
 
         .form-input:focus ~ .form-label,
-        .form-input:not(:placeholder-shown) ~ .form-label {
+        .form-input:not(:placeholder-shown) ~ .form-label,
+        .form-input.has-value ~ .form-label {
             top: -0.5rem;
             left: 0;
             font-size: 0.85rem;
             color: var(--secondary-light);
             font-weight: 500;
+        }
+
+        textarea.form-input:focus ~ .form-label,
+        textarea.form-input:not(:placeholder-shown) ~ .form-label,
+        textarea.form-input.has-value ~ .form-label {
+            top: -0.5rem;
         }
 
         .form-input:focus ~ .highlight {
@@ -1770,8 +1789,9 @@
             <svg class="icon-lines" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                     <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stop-color="#FF5F6D"/>
-                        <stop offset="100%" stop-color="#FFC371"/>
+                        <stop offset="0%" stop-color="#1976d2"/>
+                        <stop offset="50%" stop-color="#63a4ff"/>
+                        <stop offset="100%" stop-color="#1976d2"/>
                     </linearGradient>
                 </defs>
             </svg>
@@ -1779,7 +1799,7 @@
             <!-- Digital Marketing Icons -->
             <div class="icon-node" style="top:60%; left:10%;" data-tooltip="Instagram">
                 <svg viewBox="0 0 50 50">
-                    <rect x="5" y="5" width="40" height="40" rx="10" fill="#E1306C"/>
+                    <rect x="5" y="5" width="40" height="40" rx="10" fill="#1976d2"/>
                     <circle cx="25" cy="25" r="10" fill="#fff"/>
                     <circle cx="35" cy="15" r="3" fill="#fff"/>
                 </svg>
@@ -1787,33 +1807,33 @@
 
             <div class="icon-node" style="top:40%; left:25%;" data-tooltip="Video">
                 <svg viewBox="0 0 64 32">
-                    <rect x="2" y="14" width="60" height="4" rx="0" fill="#00A8FF"/>
+                    <rect x="2" y="14" width="60" height="4" rx="0" fill="#63a4ff"/>
                     <polygon points="50,8 50,24 62,16" fill="#fff"/>
                 </svg>
             </div>
 
             <div class="icon-node" style="top:50%; left:40%;" data-tooltip="Analytics">
                 <svg viewBox="0 0 50 50">
-                    <line x1="10" y1="35" x2="20" y2="25" stroke="#3DDC84" stroke-width="2"/>
-                    <line x1="20" y1="25" x2="30" y2="30" stroke="#3DDC84" stroke-width="2"/>
-                    <line x1="30" y1="30" x2="40" y2="15" stroke="#3DDC84" stroke-width="2"/>
-                    <circle cx="10" cy="35" r="2" fill="#3DDC84"/>
-                    <circle cx="20" cy="25" r="2" fill="#3DDC84"/>
-                    <circle cx="30" cy="30" r="2" fill="#3DDC84"/>
-                    <circle cx="40" cy="15" r="2" fill="#3DDC84"/>
+                    <line x1="10" y1="35" x2="20" y2="25" stroke="#1976d2" stroke-width="2"/>
+                    <line x1="20" y1="25" x2="30" y2="30" stroke="#1976d2" stroke-width="2"/>
+                    <line x1="30" y1="30" x2="40" y2="15" stroke="#1976d2" stroke-width="2"/>
+                    <circle cx="10" cy="35" r="2" fill="#63a4ff"/>
+                    <circle cx="20" cy="25" r="2" fill="#63a4ff"/>
+                    <circle cx="30" cy="30" r="2" fill="#63a4ff"/>
+                    <circle cx="40" cy="15" r="2" fill="#63a4ff"/>
                 </svg>
             </div>
 
             <div class="icon-node" style="top:30%; left:55%;" data-tooltip="Email">
                 <svg viewBox="0 0 50 50">
-                    <rect x="5" y="15" width="40" height="20" fill="#FFD700"/>
+                    <rect x="5" y="15" width="40" height="20" fill="#5472d3"/>
                     <polyline points="5,15 25,30 45,15" fill="none" stroke="#fff" stroke-width="2"/>
                 </svg>
             </div>
 
             <div class="icon-node" style="top:45%; left:70%;" data-tooltip="Content/Blog">
                 <svg viewBox="0 0 50 50">
-                    <rect x="10" y="10" width="30" height="30" fill="#FF6B6B"/>
+                    <rect x="10" y="10" width="30" height="30" fill="#1976d2"/>
                     <line x1="15" y1="20" x2="35" y2="20" stroke="#fff" stroke-width="2"/>
                     <line x1="15" y1="30" x2="35" y2="30" stroke="#fff" stroke-width="2"/>
                 </svg>
@@ -1821,7 +1841,7 @@
 
             <div class="icon-node" style="top:35%; left:85%;" data-tooltip="Share">
                 <svg viewBox="0 0 50 50">
-                    <circle cx="25" cy="25" r="8" fill="#9B59B6"/>
+                    <circle cx="25" cy="25" r="8" fill="#63a4ff"/>
                     <line x1="25" y1="17" x2="25" y2="8" stroke="#fff" stroke-width="2"/>
                     <line x1="25" y1="33" x2="25" y2="42" stroke="#fff" stroke-width="2"/>
                     <line x1="17" y1="25" x2="8" y2="25" stroke="#fff" stroke-width="2"/>
@@ -2057,13 +2077,7 @@
                         <p>Kochi, Kerala | Nagercoil, Kanyakumari</p>
                     </div>
                 </div>
-                <form class="contact-form" id="contactForm" action="https://formsubmit.co/info@craftedclipz.in" method="POST">
-                    <!-- FormSubmit Configuration -->
-                    <input type="hidden" name="_subject" value="New Contact Form Submission from Crafted Clipz">
-                    <input type="hidden" name="_captcha" value="false">
-                    <input type="hidden" name="_template" value="table">
-                    <input type="hidden" name="_next" value="https://muhilanraj18.github.io/cf2/index.html#contact">
-                    
+                <form class="contact-form" id="contactForm" method="POST">
                     <div class="form-group">
                         <input type="text" class="form-input" placeholder=" " id="name" name="name" required>
                         <label for="name" class="form-label">Your Name</label>
@@ -2075,7 +2089,7 @@
                         <span class="highlight"></span>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-input" placeholder=" " id="subject" name="subject" required>
+                        <input type="text" class="form-input" placeholder=" " id="subject" name="_subject" required>
                         <label for="subject" class="form-label">Subject</label>
                         <span class="highlight"></span>
                     </div>
@@ -2197,18 +2211,20 @@
                 svg.innerHTML = `
                     <defs>
                         <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%" stop-color="#FF5F6D"/>
-                            <stop offset="100%" stop-color="#FFC371"/>
+                            <stop offset="0%" stop-color="#1976d2"/>
+                            <stop offset="50%" stop-color="#63a4ff"/>
+                            <stop offset="100%" stop-color="#1976d2"/>
                         </linearGradient>
                     </defs>
                 `;
 
                 const path = document.createElementNS('http://www.w3.org/2000/svg','path');
                 path.setAttribute('stroke','url(#lineGradient)');
-                path.setAttribute('stroke-width','4');
+                path.setAttribute('stroke-width','3');
                 path.setAttribute('fill','none');
                 path.setAttribute('stroke-linecap','round');
                 path.setAttribute('stroke-linejoin','round');
+                path.setAttribute('opacity','0.6');
 
                 let d = '';
                 nodes.forEach((node, i) => {
@@ -2233,16 +2249,16 @@
                     { strokeDashoffset: pathLength }, 
                     { strokeDashoffset: 0 }
                 ], {
-                    duration: 2500, 
-                    easing: 'ease-out', 
+                    duration: 5000, 
+                    easing: 'ease-in-out', 
                     fill: 'forwards'
                 });
 
-                // Animate nodes sequentially
+                // Animate nodes sequentially with slower timing
                 nodes.forEach((node,i) => {
                     setTimeout(() => { 
-                        node.style.transform = 'translate(-50%,-50%) scale(1)'; 
-                    }, i * 400);
+                        node.classList.add('animated');
+                    }, i * 800 + 1200);
                 });
             }
 
@@ -2517,47 +2533,98 @@
                 document.head.appendChild(preloadLink);
             });
 
-            // Contact Form Submission
+            // Contact Form Submission with EmailJS
             const contactForm = document.getElementById('contactForm');
             const successMessage = document.getElementById('successMessage');
             
-            if (contactForm) {
-                contactForm.addEventListener('submit', function(e) {
+            // Fix label position on input
+            const formInputs = document.querySelectorAll('.form-input');
+            formInputs.forEach(input => {
+                // Check on load if input has value
+                if (input.value) {
+                    input.classList.add('has-value');
+                }
+                
+                // Check on input change
+                input.addEventListener('input', function() {
+                    if (this.value) {
+                        this.classList.add('has-value');
+                    } else {
+                        this.classList.remove('has-value');
+                    }
+                });
+                
+                // Check on blur
+                input.addEventListener('blur', function() {
+                    if (this.value) {
+                        this.classList.add('has-value');
+                    } else {
+                        this.classList.remove('has-value');
+                    }
+                });
+            });
+            
+            // Handle Enter key to submit form (except in textarea)
+            contactForm.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') {
                     e.preventDefault();
+                    const submitButton = contactForm.querySelector('button[type="submit"]');
+                    if (submitButton) {
+                        submitButton.click();
+                    }
+                }
+            });
+            
+            // Contact Form Submission
+            if (contactForm) {
+                contactForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    // Get submit button
+                    const submitBtn = contactForm.querySelector('button[type="submit"]');
+                    const originalBtnText = submitBtn.textContent;
+                    
+                    // Disable button and show loading
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = 'Sending...';
                     
                     // Get form data
                     const formData = new FormData(contactForm);
                     
-                    // Submit form using fetch
-                    fetch(contactForm.action, {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'Accept': 'application/json'
-                        }
-                    })
-                    .then(response => {
-                        if (response.ok) {
+                    try {
+                        // Send to PHP handler
+                        const response = await fetch('contact.php', {
+                            method: 'POST',
+                            body: formData
+                        });
+                        
+                        const result = await response.json();
+                        
+                        if (result.success) {
                             // Show success message
                             successMessage.classList.add('show');
-                            
-                            // Reset form
                             contactForm.reset();
+                            
+                            // Remove has-value class from all inputs
+                            formInputs.forEach(input => {
+                                input.classList.remove('has-value');
+                            });
                             
                             // Hide success message after 5 seconds
                             setTimeout(() => {
                                 successMessage.classList.remove('show');
                             }, 5000);
                         } else {
-                            return response.json().then(data => {
-                                throw new Error(data.message || 'Form submission failed');
-                            });
+                            alert('Error: ' + result.message);
                         }
-                    })
-                    .catch(error => {
+                    } catch (error) {
                         console.error('Error:', error);
-                        alert('There was an error sending your message. Please try again or contact us directly at info@craftedclipz.in');
-                    });
+                        alert('Failed to send message. Please try again or contact us directly at info@craftedclipz.in');
+                    } finally {
+                        // Re-enable button
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = originalBtnText;
+                    }
                 });
             }
         });
