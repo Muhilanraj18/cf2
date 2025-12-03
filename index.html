@@ -297,13 +297,7 @@
             max-width: 1400px;
             height: 600px;
             z-index: 0;
-            opacity: 0.3;
-        }
-
-        @keyframes backgroundFloat {
-            0%, 100% {
-                transform: translate(-50%, -50%) scale(1) rotate(0deg);
-            }
+            opacity: 0.25;
         }
 
         .icon-lines {
@@ -320,7 +314,27 @@
             height: 70px;
             transform: translate(-50%, -50%) scale(0);
             cursor: pointer;
-            transition: transform 0.5s ease;
+            transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+        }
+
+        .icon-node.animated {
+            animation: nodeAppear 1.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes nodeAppear {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 0;
+            }
+            70% {
+                transform: translate(-50%, -50%) scale(1.05);
+                opacity: 0.7;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
         }
 
         .icon-node svg { 
@@ -871,16 +885,26 @@
             padding: 1rem 0;
             border: none;
             border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            background: transparent;
+            background: transparent !important;
             font-size: 1rem;
             transition: var(--transition);
             font-family: 'Inter', sans-serif;
             color: var(--swiss-white);
         }
 
+        .form-input:-webkit-autofill,
+        .form-input:-webkit-autofill:hover,
+        .form-input:-webkit-autofill:focus,
+        .form-input:-webkit-autofill:active {
+            -webkit-box-shadow: 0 0 0 30px var(--swiss-black) inset !important;
+            -webkit-text-fill-color: var(--swiss-white) !important;
+            background: transparent !important;
+        }
+
         .form-input:focus {
             outline: none;
             border-bottom: 2px solid var(--primary);
+            background: transparent !important;
         }
 
         .form-label {
@@ -891,15 +915,23 @@
             transition: var(--transition);
             color: rgba(255, 255, 255, 0.5);
             font-weight: 400;
+            background: transparent;
         }
 
         .form-input:focus ~ .form-label,
-        .form-input:not(:placeholder-shown) ~ .form-label {
+        .form-input:not(:placeholder-shown) ~ .form-label,
+        .form-input.has-value ~ .form-label {
             top: -0.5rem;
             left: 0;
             font-size: 0.85rem;
             color: var(--secondary-light);
             font-weight: 500;
+        }
+
+        textarea.form-input:focus ~ .form-label,
+        textarea.form-input:not(:placeholder-shown) ~ .form-label,
+        textarea.form-input.has-value ~ .form-label {
+            top: -0.5rem;
         }
 
         .form-input:focus ~ .highlight {
@@ -1878,8 +1910,9 @@
             <svg class="icon-lines" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                     <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stop-color="#FF5F6D"/>
-                        <stop offset="100%" stop-color="#FFC371"/>
+                        <stop offset="0%" stop-color="#1976d2"/>
+                        <stop offset="50%" stop-color="#63a4ff"/>
+                        <stop offset="100%" stop-color="#1976d2"/>
                     </linearGradient>
                 </defs>
             </svg>
@@ -1895,33 +1928,33 @@
 
             <div class="icon-node" style="top:40%; left:25%;" data-tooltip="Video">
                 <svg viewBox="0 0 64 32">
-                    <rect x="2" y="14" width="60" height="4" rx="0" fill="#1565c0"/>
+                    <rect x="2" y="14" width="60" height="4" rx="0" fill="#63a4ff"/>
                     <polygon points="50,8 50,24 62,16" fill="#fff"/>
                 </svg>
             </div>
 
             <div class="icon-node" style="top:50%; left:40%;" data-tooltip="Analytics">
                 <svg viewBox="0 0 50 50">
-                    <line x1="10" y1="35" x2="20" y2="25" stroke="#5472d3" stroke-width="2"/>
-                    <line x1="20" y1="25" x2="30" y2="30" stroke="#5472d3" stroke-width="2"/>
-                    <line x1="30" y1="30" x2="40" y2="15" stroke="#5472d3" stroke-width="2"/>
-                    <circle cx="10" cy="35" r="2" fill="#5472d3"/>
-                    <circle cx="20" cy="25" r="2" fill="#5472d3"/>
-                    <circle cx="30" cy="30" r="2" fill="#5472d3"/>
-                    <circle cx="40" cy="15" r="2" fill="#5472d3"/>
+                    <line x1="10" y1="35" x2="20" y2="25" stroke="#1976d2" stroke-width="2"/>
+                    <line x1="20" y1="25" x2="30" y2="30" stroke="#1976d2" stroke-width="2"/>
+                    <line x1="30" y1="30" x2="40" y2="15" stroke="#1976d2" stroke-width="2"/>
+                    <circle cx="10" cy="35" r="2" fill="#63a4ff"/>
+                    <circle cx="20" cy="25" r="2" fill="#63a4ff"/>
+                    <circle cx="30" cy="30" r="2" fill="#63a4ff"/>
+                    <circle cx="40" cy="15" r="2" fill="#63a4ff"/>
                 </svg>
             </div>
 
             <div class="icon-node" style="top:30%; left:55%;" data-tooltip="Email">
                 <svg viewBox="0 0 50 50">
-                    <rect x="5" y="15" width="40" height="20" fill="#1976d2"/>
+                    <rect x="5" y="15" width="40" height="20" fill="#5472d3"/>
                     <polyline points="5,15 25,30 45,15" fill="none" stroke="#fff" stroke-width="2"/>
                 </svg>
             </div>
 
             <div class="icon-node" style="top:45%; left:70%;" data-tooltip="Content/Blog">
                 <svg viewBox="0 0 50 50">
-                    <rect x="10" y="10" width="30" height="30" fill="#0d47a1"/>
+                    <rect x="10" y="10" width="30" height="30" fill="#1976d2"/>
                     <line x1="15" y1="20" x2="35" y2="20" stroke="#fff" stroke-width="2"/>
                     <line x1="15" y1="30" x2="35" y2="30" stroke="#fff" stroke-width="2"/>
                 </svg>
@@ -2165,13 +2198,7 @@
                         <p>Kochi, Kerala | Nagercoil, Kanyakumari</p>
                     </div>
                 </div>
-                <form class="contact-form" id="contactForm" action="https://formsubmit.co/info@craftedclipz.in" method="POST">
-                    <!-- FormSubmit Configuration -->
-                    <input type="hidden" name="_subject" value="New Contact Form Submission from Crafted Clipz">
-                    <input type="hidden" name="_captcha" value="false">
-                    <input type="hidden" name="_template" value="table">
-                    <input type="hidden" name="_next" value="https://muhilanraj18.github.io/cf2/index.html#contact">
-                    
+                <form class="contact-form" id="contactForm" method="POST">
                     <div class="form-group">
                         <input type="text" class="form-input" placeholder=" " id="name" name="name" required>
                         <label for="name" class="form-label">Your Name</label>
@@ -2183,7 +2210,7 @@
                         <span class="highlight"></span>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-input" placeholder=" " id="subject" name="subject" required>
+                        <input type="text" class="form-input" placeholder=" " id="subject" name="_subject" required>
                         <label for="subject" class="form-label">Subject</label>
                         <span class="highlight"></span>
                     </div>
@@ -2317,9 +2344,9 @@
                 svg.innerHTML = `
                     <defs>
                         <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%" stop-color="#1565c0"/>
-                            <stop offset="50%" stop-color="#1976d2"/>
-                            <stop offset="100%" stop-color="#5472d3"/>
+                            <stop offset="0%" stop-color="#1976d2"/>
+                            <stop offset="50%" stop-color="#63a4ff"/>
+                            <stop offset="100%" stop-color="#1976d2"/>
                         </linearGradient>
                     </defs>
                 `;
@@ -2355,16 +2382,16 @@
                     { strokeDashoffset: pathLength }, 
                     { strokeDashoffset: 0 }
                 ], {
-                    duration: 6000, 
+                    duration: 5000, 
                     easing: 'ease-in-out', 
                     fill: 'forwards'
                 });
 
-                // Animate nodes sequentially - very very slow
+                // Animate nodes sequentially with slower timing
                 nodes.forEach((node,i) => {
                     setTimeout(() => { 
-                        node.style.transform = 'translate(-50%,-50%) scale(1)'; 
-                    }, i * 1000);
+                        node.classList.add('animated');
+                    }, i * 800 + 1200);
                 });
             }
 
@@ -2666,47 +2693,81 @@
                 document.head.appendChild(preloadLink);
             });
 
-            // Contact Form Submission
+            // Contact Form Submission with EmailJS
             const contactForm = document.getElementById('contactForm');
             const successMessage = document.getElementById('successMessage');
             
+            // Fix label position on input
+            const formInputs = document.querySelectorAll('.form-input');
+            formInputs.forEach(input => {
+                // Check on load if input has value
+                if (input.value) {
+                    input.classList.add('has-value');
+                }
+                
+                // Check on input change
+                input.addEventListener('input', function() {
+                    if (this.value) {
+                        this.classList.add('has-value');
+                    } else {
+                        this.classList.remove('has-value');
+                    }
+                });
+                
+                // Check on blur
+                input.addEventListener('blur', function() {
+                    if (this.value) {
+                        this.classList.add('has-value');
+                    } else {
+                        this.classList.remove('has-value');
+                    }
+                });
+            });
+            
+            // Handle Enter key to submit form (except in textarea)
+            contactForm.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') {
+                    e.preventDefault();
+                    const submitButton = contactForm.querySelector('button[type="submit"]');
+                    if (submitButton) {
+                        submitButton.click();
+                    }
+                }
+            });
+            
+            // Contact Form Submission - Works locally with mailto
             if (contactForm) {
                 contactForm.addEventListener('submit', function(e) {
                     e.preventDefault();
                     
                     // Get form data
-                    const formData = new FormData(contactForm);
+                    const name = document.getElementById('name').value;
+                    const email = document.getElementById('email').value;
+                    const subject = document.getElementById('subject').value;
+                    const message = document.getElementById('message').value;
                     
-                    // Submit form using fetch
-                    fetch(contactForm.action, {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'Accept': 'application/json'
-                        }
-                    })
-                    .then(response => {
-                        if (response.ok) {
-                            // Show success message
-                            successMessage.classList.add('show');
-                            
-                            // Reset form
-                            contactForm.reset();
-                            
-                            // Hide success message after 5 seconds
-                            setTimeout(() => {
-                                successMessage.classList.remove('show');
-                            }, 5000);
-                        } else {
-                            return response.json().then(data => {
-                                throw new Error(data.message || 'Form submission failed');
-                            });
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        alert('There was an error sending your message. Please try again or contact us directly at info@craftedclipz.in');
-                    });
+                    // Create mailto link
+                    const mailtoBody = `Name: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0AMessage:%0D%0A${encodeURIComponent(message)}`;
+                    const mailtoLink = `mailto:info@craftedclipz.in?subject=${encodeURIComponent('Contact Form: ' + subject)}&body=${mailtoBody}`;
+                    
+                    // Open email client
+                    window.location.href = mailtoLink;
+                    
+                    // Show success message
+                    setTimeout(() => {
+                        successMessage.classList.add('show');
+                        contactForm.reset();
+                        
+                        // Remove has-value class from all inputs
+                        formInputs.forEach(input => {
+                            input.classList.remove('has-value');
+                        });
+                        
+                        // Hide success message after 5 seconds
+                        setTimeout(() => {
+                            successMessage.classList.remove('show');
+                        }, 5000);
+                    }, 500);
                 });
             }
 
