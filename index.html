@@ -1118,13 +1118,9 @@
         /* FAB - Floating Action Button */
         .fab-container {
             position: fixed;
-            bottom: 3rem;
-            right: 1.5rem;
+            bottom: 2rem;
+            right: 2rem;
             z-index: 900;
-        }
-
-        .fab-container.stop-at-contact {
-            position: absolute;
         }
 
         .fab {
@@ -1158,7 +1154,7 @@
 
         .fab-options {
             position: absolute;
-            bottom: 80px;
+            bottom: 70px;
             right: 0;
             display: flex;
             flex-direction: column;
@@ -1171,7 +1167,6 @@
         .fab-options.active {
             opacity: 1;
             pointer-events: all;
-            bottom: 68px;
         }
 
         .fab-option {
@@ -1222,6 +1217,8 @@
         .fab-label {
             position: absolute;
             right: 58px;
+            top: 50%;
+            transform: translateY(-50%);
             background: rgba(0, 0, 0, 0.8);
             color: white;
             padding: 0.5rem 1rem;
@@ -1235,6 +1232,10 @@
 
         .fab-option:hover .fab-label {
             opacity: 1;
+        }
+        
+        .fab-option {
+            position: relative;
         }
 
         /* Chatbot */
@@ -1260,12 +1261,12 @@
 
         .chatbot-container {
             position: fixed;
-            bottom: 100px;
+            bottom: 2rem;
             right: 2rem;
             width: 400px;
-            max-width: calc(100vw - 2rem);
+            max-width: calc(100vw - 4rem);
             height: 600px;
-            max-height: calc(100vh - 150px);
+            max-height: calc(100vh - 4rem);
             background: var(--swiss-black);
             border-radius: 16px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
@@ -1859,9 +1860,8 @@
             }
 
             .fab-container {
-                bottom: 1rem;
-                right: 1rem;
-                z-index: 900;
+                bottom: 1.5rem;
+                right: 1.5rem;
             }
             
             .testimonials-grid {
@@ -1985,9 +1985,8 @@
             }
 
             .fab-container {
-                bottom: 0.75rem;
-                right: 0.75rem;
-                z-index: 900;
+                bottom: 1rem;
+                right: 1rem;
             }
             
             .testimonials-grid {
@@ -2439,14 +2438,6 @@
             </button>
         </div>
         <div class="chatbot-messages" id="chatbotMessages">
-            <div class="chatbot-message bot">
-                <div class="message-avatar bot">
-                    <i class="material-icons">smart_toy</i>
-                </div>
-                <div class="message-content bot">
-                    Hi! 👋 Welcome to Crafted Clipz! I'm here to help you. How can I assist you today?
-                </div>
-            </div>
         </div>
         <div class="chatbot-typing" id="chatbotTyping">
             <div class="message-avatar bot">
@@ -2622,6 +2613,13 @@
                 chatbotOverlay.classList.add('active');
                 fabToggle.classList.remove('active');
                 fabOptions.classList.remove('active');
+                
+                // Add welcome message if chatbot is empty
+                if (chatbotMessages.children.length === 0) {
+                    setTimeout(() => {
+                        addMessage("Hi! 👋 Welcome to Crafted Clipz! I'm here to help you. How can I assist you today?");
+                    }, 800);
+                }
             });
 
             // Close chatbot
@@ -2634,6 +2632,14 @@
                 chatbotContainer.classList.remove('active');
                 chatbotOverlay.classList.remove('active');
             });
+            
+            // Close chatbot on Escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && chatbotContainer.classList.contains('active')) {
+                    chatbotContainer.classList.remove('active');
+                    chatbotOverlay.classList.remove('active');
+                }
+            });
 
             const responses = {
                 services: "We offer a wide range of digital marketing services:\n\n• Branding & Identity Design\n• Motion Graphics & Video Production\n• SEO & Content Marketing\n• Web Design & Development\n• Digital Marketing Campaigns\n• Video Ads & Social Media Content\n• Strategic Planning & Consulting\n\nWhich service interests you?",
@@ -2644,7 +2650,7 @@
                 
                 timeline: "Project timelines vary based on complexity:\n\n• Logo/Branding: 2-3 weeks\n• Website Design: 4-6 weeks\n• Video Production: 2-4 weeks\n• Full Marketing Campaign: 6-8 weeks\n• SEO Services: Ongoing (3-6 months for results)\n\nWe'll provide a detailed timeline during our initial consultation.",
                 
-                contact: "Great! Here's how to reach us:\n\n📞 Phone: +91 7418 167 906\n📍 Location: Nagercoil, Kerala\n📧 Email: info@craftedclipz.in\n\nYou can also fill out the contact form above, and we'll get back to you within 24 hours!",
+                contact: "Great! Here's how to reach us:\n\n📞 Phone: +91 7418 167 906\n📍 Location: Kochi, Kerala | Nagercoil, Kanyakumari\n📧 Email: info@craftedclipz.in\n\nYou can also fill out the contact form above, and we'll get back to you within 24 hours!",
                 
                 process: "Our proven process ensures success:\n\n1️⃣ Discovery Call - Understanding your needs\n2️⃣ Strategy Development - Creating a custom plan\n3️⃣ Design & Development - Bringing ideas to life\n4️⃣ Review & Refinement - Your feedback matters\n5️⃣ Launch & Support - Ongoing assistance\n\nReady to get started?"
             };
@@ -2695,43 +2701,45 @@
                 
                 // Default response
                 return "Thanks for your message! For specific information, try asking about:\n\n• Our services\n• Pricing\n• Portfolio\n• Project timelines\n• Contact information\n• Our process\n\nOr you can use the quick reply buttons below! If you need detailed assistance, feel free to contact us directly.";
-            };
-
-            chatbotToggle.addEventListener('click', () => {
-                chatbotContainer.classList.toggle('active');
-                chatbotOverlay.classList.toggle('active');
-            });
-
-            chatbotClose.addEventListener('click', () => {
-                chatbotContainer.classList.remove('active');
-                chatbotOverlay.classList.remove('active');
-            });
-
-            chatbotOverlay.addEventListener('click', () => {
-                chatbotContainer.classList.remove('active');
-                chatbotOverlay.classList.remove('active');
-            });
+            }
 
             function addMessage(message, isUser = false) {
                 const messageDiv = document.createElement('div');
                 messageDiv.className = `chatbot-message ${isUser ? 'user' : 'bot'}`;
                 
-                messageDiv.innerHTML = `
-                    <div class="message-avatar ${isUser ? 'user' : 'bot'}">
-                        <i class="material-icons">${isUser ? 'person' : 'smart_toy'}</i>
-                    </div>
-                    <div class="message-content ${isUser ? 'user' : 'bot'}">
-                        ${message.replace(/\n/g, '<br>')}
-                    </div>
-                `;
+                if (!isUser) {
+                    messageDiv.innerHTML = `
+                        <div class="message-avatar bot">
+                            <i class="material-icons">smart_toy</i>
+                        </div>
+                        <div class="message-content bot">
+                            ${message.replace(/\n/g, '<br>')}
+                        </div>
+                    `;
+                } else {
+                    messageDiv.innerHTML = `
+                        <div class="message-content user">
+                            ${message.replace(/\n/g, '<br>')}
+                        </div>
+                        <div class="message-avatar user">
+                            <i class="material-icons">person</i>
+                        </div>
+                    `;
+                }
                 
                 chatbotMessages.appendChild(messageDiv);
-                chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+                
+                // Smooth scroll to bottom
+                setTimeout(() => {
+                    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+                }, 100);
             }
 
             function showTyping() {
                 chatbotTyping.classList.add('active');
-                chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+                setTimeout(() => {
+                    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+                }, 100);
             }
 
             function hideTyping() {
@@ -2943,38 +2951,7 @@
                 });
             }
 
-            // FAB position control - stop at contact section
-            const fabContainer = document.querySelector('.fab-container');
-            const contactSection = document.getElementById('contact');
-            const footer = document.querySelector('footer');
-
-            function updateFabPosition() {
-                if (!fabContainer || !contactSection) return;
-
-                const scrollY = window.scrollY;
-                const windowHeight = window.innerHeight;
-                const contactTop = contactSection.offsetTop;
-                const contactHeight = contactSection.offsetHeight;
-                const footerTop = footer ? footer.offsetTop : document.body.scrollHeight;
-                
-                // Calculate when to stop FAB (200px before contact section ends)
-                const stopPoint = contactTop + contactHeight - windowHeight - 100;
-                
-                if (scrollY >= stopPoint) {
-                    fabContainer.classList.add('stop-at-contact');
-                    // Position it 200px from bottom of contact section
-                    const distanceFromTop = contactTop + contactHeight - 200;
-                    fabContainer.style.top = distanceFromTop + 'px';
-                } else {
-                    fabContainer.classList.remove('stop-at-contact');
-                    fabContainer.style.top = '';
-                }
-            }
-
-            // Update on scroll and resize
-            window.addEventListener('scroll', updateFabPosition);
-            window.addEventListener('resize', updateFabPosition);
-            updateFabPosition(); // Initial check
+            // No need for FAB position control anymore since it's in the footer
         });
     </script>
 </body>
