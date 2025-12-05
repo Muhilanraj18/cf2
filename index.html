@@ -531,6 +531,28 @@
             text-align: center;
             border-top: 4px solid transparent;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.3), 
+                transparent
+            );
+            transform: skewX(-20deg);
+            transition: left 0.8s ease;
+        }
+
+        .service-card:hover::before {
+            left: 100%;
         }
 
         .service-card:hover {
@@ -1115,25 +1137,69 @@
             margin-bottom: 0;
         }
 
+        .footer-policies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .footer-policies a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .footer-policies a::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--secondary);
+            transition: width 0.3s ease;
+        }
+
+        .footer-policies a:hover {
+            color: var(--secondary);
+        }
+
+        .footer-policies a:hover::after {
+            width: 100%;
+        }
+
         /* FAB - Floating Action Button */
         .widget-container {
             position: fixed;
             bottom: 30px;
             right: 30px;
             z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            position: relative;
+        }
+
+        .widget-container.at-footer {
+            position: fixed;
         }
 
         .open-btn {
             width: 60px;
             height: 60px;
             border-radius: 50%;
-            background-color: white;
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
             border: none;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 15px rgba(25, 118, 210, 0.4);
             cursor: pointer;
             font-size: 24px;
-            color: #333;
-            transition: transform 0.3s ease;
+            color: var(--swiss-white);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1141,6 +1207,7 @@
 
         .open-btn:hover {
             transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(25, 118, 210, 0.6);
         }
 
         .open-btn.hidden {
@@ -1157,12 +1224,12 @@
             align-items: center;
             gap: 15px;
             padding: 15px 0;
-            background: rgba(255, 255, 255, 0.25);
+            background: rgba(13, 71, 161, 0.25);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(99, 164, 255, 0.3);
             border-radius: 50px;
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            box-shadow: 0 8px 32px 0 rgba(13, 71, 161, 0.4);
             opacity: 0;
             transform: translateY(20px) scale(0.8);
             pointer-events: none;
@@ -1822,7 +1889,7 @@
 
             .widget-container {
                 bottom: 20px;
-                right: 20px;
+                right: 10px;
                 left: auto;
             }
 
@@ -1970,7 +2037,7 @@
 
             .widget-container {
                 bottom: 15px;
-                right: 15px;
+                right: 10px;
                 left: auto;
             }
 
@@ -2395,6 +2462,12 @@
             </div>
             <div class="copyright">
                 <p>© 2023 Crafted Clipz. All rights reserved.</p>
+                <div class="footer-policies">
+                    <a href="#privacy-policy">Privacy Policy</a>
+                    <a href="#cookie-policy">Cookie Policy</a>
+                    <a href="#security">Security</a>
+                    <a href="#terms-of-service">Terms of Service</a>
+                </div>
                 <div class="social-icons">
                     <a href="https://www.linkedin.com/company/craftedclipz/" target="_blank" title="LinkedIn" class="social-icon">
                         <i class="fa-brands fa-linkedin-in"></i>
@@ -2830,10 +2903,10 @@
                     if (targetElement) {
                         const offsetTop = targetElement.offsetTop - 70;
                         
-                        // Smooth scroll with easeInOutCubic - super smooth
+                        // Smooth scroll with linear animation - constant speed
                         const startPosition = window.pageYOffset;
                         const distance = offsetTop - startPosition;
-                        const duration = 1200; // 1.2 seconds for ultra-smooth animation
+                        const duration = 600; // 0.6 seconds
                         let start = null;
                         
                         function animation(currentTime) {
@@ -2845,11 +2918,8 @@
                         }
                         
                         function ease(t, b, c, d) {
-                            // easeInOutCubic - very smooth acceleration and deceleration
-                            t /= d / 2;
-                            if (t < 1) return c / 2 * t * t * t + b;
-                            t -= 2;
-                            return c / 2 * (t * t * t + 2) + b;
+                            // Linear - constant speed throughout
+                            return c * t / d + b;
                         }
                         
                         requestAnimationFrame(animation);
@@ -2898,6 +2968,41 @@
             // Contact Form Submission with EmailJS
             const contactForm = document.getElementById('contactForm');
             const successMessage = document.getElementById('successMessage');
+            
+            // FAB position control to stop at footer
+            const widgetContainer = document.querySelector('.widget-container');
+            const copyrightSection = document.querySelector('.copyright');
+            
+            function updateFABPosition() {
+                if (!copyrightSection) return;
+                
+                const copyrightRect = copyrightSection.getBoundingClientRect();
+                const viewportHeight = window.innerHeight;
+                const fabHeight = 60;
+                const extraOffset = 40;
+                
+                // Calculate target position
+                if (copyrightRect.top < viewportHeight - fabHeight - 30) {
+                    const overlap = viewportHeight - copyrightRect.top - fabHeight - 30;
+                    const targetBottom = 30 + overlap + extraOffset;
+                    
+                    // Set position immediately without transition
+                    widgetContainer.style.transition = 'none';
+                    widgetContainer.style.bottom = targetBottom + 'px';
+                    
+                    // Force reflow
+                    void widgetContainer.offsetHeight;
+                } else {
+                    widgetContainer.style.transition = 'none';
+                    widgetContainer.style.bottom = '30px';
+                    void widgetContainer.offsetHeight;
+                }
+            }
+            
+            // Update FAB position on scroll and resize
+            window.addEventListener('scroll', updateFABPosition);
+            window.addEventListener('resize', updateFABPosition);
+            updateFABPosition(); // Initial check
             
             // Fix label position on input
             const formInputs = document.querySelectorAll('.form-input');
@@ -2972,8 +3077,6 @@
                     }, 500);
                 });
             }
-
-            // No need for FAB position control anymore since it's in the footer
         });
     </script>
 </body>
