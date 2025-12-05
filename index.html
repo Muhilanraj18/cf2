@@ -538,21 +538,30 @@
         .service-card::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: -100%;
-            width: 50%;
-            height: 100%;
+            top: -50%;
+            left: -150%;
+            width: 80%;
+            height: 200%;
             background: linear-gradient(90deg, 
                 transparent, 
-                rgba(255, 255, 255, 0.3), 
+                rgba(255, 255, 255, 0.15), 
                 transparent
             );
-            transform: skewX(-20deg);
-            transition: left 0.8s ease;
+            transform: skewX(-15deg);
+            transition: none;
         }
 
         .service-card:hover::before {
-            left: 100%;
+            animation: shine 1.2s ease-out forwards;
+        }
+
+        @keyframes shine {
+            0% {
+                left: -150%;
+            }
+            100% {
+                left: 150%;
+            }
         }
 
         .service-card:hover {
@@ -2214,7 +2223,7 @@
         <div class="container">
             <div class="section-title">
                 <h2>About Crafted Clipz</h2>
-                <p>Your full-service partner for digital success</p>
+                <p>Your full-service partner for digital succes</p>
             </div>
             <div class="about-content">
                 <div class="about-text">
@@ -2463,10 +2472,10 @@
             <div class="copyright">
                 <p>© 2023 Crafted Clipz. All rights reserved.</p>
                 <div class="footer-policies">
-                    <a href="#privacy-policy">Privacy Policy</a>
-                    <a href="#cookie-policy">Cookie Policy</a>
-                    <a href="#security">Security</a>
-                    <a href="#terms-of-service">Terms of Service</a>
+                    <a href="privacy-policy.html">Privacy Policy</a>
+                    <a href="cookie-policy.html">Cookie Policy</a>
+                    <a href="security.html">Security</a>
+                    <a href="terms-of-service.html">Terms of Service</a>
                 </div>
                 <div class="social-icons">
                     <a href="https://www.linkedin.com/company/craftedclipz/" target="_blank" title="LinkedIn" class="social-icon">
