@@ -27,17 +27,46 @@
     <link rel="canonical" href="https://craftedclipz.in/">
     
     <!-- Favicon - Optimized for better visibility -->
-    <link rel="icon" type="image/svg+xml" href="Logo Svg-04.svg">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-    <link rel="shortcut icon" href="favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="apple-touch-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="apple-touch-icon-120x120.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="android-chrome-192x192.png">
+    <link rel="shortcut icon" href="android-chrome-192x192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="android-chrome-192x192.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="android-chrome-192x192.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="android-chrome-192x192.png">
     <link rel="manifest" href="site.webmanifest">
     
     <title>Crafted Clipz | Full-Service Digital Kochi| Nagercoil </title>
 
+    <!-- Structured Data for Google Search -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Crafted Clipz",
+      "url": "https://craftedclipz.in",
+      "logo": "https://craftedclipz.in/android-chrome-512x512.png",
+      "image": "https://craftedclipz.in/android-chrome-512x512.png",
+      "description": "Expert digital marketing agency in Kochi & Nagercoil. We deliver branding, SEO, web development, motion graphics & performance marketing to scale your business.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Kochi, Nagercoil",
+        "addressRegion": "Kerala, Tamil Nadu",
+        "addressCountry": "IN"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+91-7418-167-906",
+        "contactType": "Customer Service",
+        "availableLanguage": ["English", "Malayalam", "Tamil"]
+      },
+      "sameAs": [
+        "https://www.linkedin.com/company/craftedclipz/",
+        "https://www.instagram.com/craftedclipz/",
+        "https://x.com/Craftedclipz",
+        "https://www.threads.com/@craftedclipz"
+      ]
+    }
+    </script>
     
     <!-- Preconnect to external domains for faster loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -3102,33 +3131,25 @@
                 }
             });
             
-            // Contact Form Submission - Works locally with mailto
+            // Contact Form Submission - Using FormSubmit.co
             if (contactForm) {
+                // Update form action to use FormSubmit
+                contactForm.setAttribute('action', 'https://formsubmit.co/info@craftedclipz.in');
+                contactForm.setAttribute('method', 'POST');
+                
+                // Add hidden fields for FormSubmit configuration
+                const hiddenFields = `
+                    <input type="hidden" name="_subject" value="New Contact Form Submission - Crafted Clipz">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_template" value="table">
+                `;
+                contactForm.insertAdjacentHTML('beforeend', hiddenFields);
+                
                 contactForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    
-                    // Get form data
-                    const name = document.getElementById('name').value;
-                    const email = document.getElementById('email').value;
-                    const subject = document.getElementById('subject').value;
-                    const message = document.getElementById('message').value;
-                    
-                    // Create mailto link
-                    const mailtoBody = `Name: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0AMessage:%0D%0A${encodeURIComponent(message)}`;
-                    const mailtoLink = `mailto:info@craftedclipz.in?subject=${encodeURIComponent('Contact Form: ' + subject)}&body=${mailtoBody}`;
-                    
-                    // Open email client
-                    window.location.href = mailtoLink;
-                    
-                    // Show success message
+                    // Let the form submit naturally to FormSubmit
+                    // Show success message after a short delay
                     setTimeout(() => {
                         successMessage.classList.add('show');
-                        contactForm.reset();
-                        
-                        // Remove has-value class from all inputs
-                        formInputs.forEach(input => {
-                            input.classList.remove('has-value');
-                        });
                         
                         // Hide success message after 5 seconds
                         setTimeout(() => {
