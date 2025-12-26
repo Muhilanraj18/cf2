@@ -3131,31 +3131,69 @@
                 }
             });
             
-            // Contact Form Submission - Using FormSubmit.co
+            // Contact Form Submission - Using Web3Forms
             if (contactForm) {
-                // Update form action to use FormSubmit
-                contactForm.setAttribute('action', 'https://formsubmit.co/info@craftedclipz.in');
-                contactForm.setAttribute('method', 'POST');
-                
-                // Add hidden fields for FormSubmit configuration
-                const hiddenFields = `
-                    <input type="hidden" name="_subject" value="New Contact Form Submission - Crafted Clipz">
-                    <input type="hidden" name="_captcha" value="false">
-                    <input type="hidden" name="_template" value="table">
-                `;
-                contactForm.insertAdjacentHTML('beforeend', hiddenFields);
-                
-                contactForm.addEventListener('submit', function(e) {
-                    // Let the form submit naturally to FormSubmit
-                    // Show success message after a short delay
-                    setTimeout(() => {
-                        successMessage.classList.add('show');
+                contactForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    const submitButton = contactForm.querySelector('button[type="submit"]');
+                    const originalText = submitButton.textContent;
+                    submitButton.textContent = 'Sending...';
+                    submitButton.disabled = true;
+                    
+                    // Get form data
+                    const formData = new FormData(contactForm);
+                    const data = {
+                        name: formData.get('name'),
+                        email: formData.get('email'),
+                        subject: formData.get('_subject') || 'Contact Form Submission',
+                        message: formData.get('message'),
+                        to: 'info@craftedclipz.in'
+                    };
+                    
+                    try {
+                        // Send via Web3Forms API
+                        const response = await fetch('https://api.web3forms.com/submit', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Accept': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                access_key: 'f30790c3-8a20-4ecd-9212-0d3bd09c53fb',
+                                name: data.name,
+                                email: data.email,
+                                subject: 'Crafted Clipz Contact: ' + data.subject,
+                                message: data.message
+                            })
+                        });
                         
-                        // Hide success message after 5 seconds
-                        setTimeout(() => {
-                            successMessage.classList.remove('show');
-                        }, 5000);
-                    }, 500);
+                        const result = await response.json();
+                        
+                        if (result.success) {
+                            // Show success message
+                            successMessage.classList.add('show');
+                            contactForm.reset();
+                            
+                            // Remove has-value class from all inputs
+                            formInputs.forEach(input => {
+                                input.classList.remove('has-value');
+                            });
+                            
+                            // Hide success message after 5 seconds
+                            setTimeout(() => {
+                                successMessage.classList.remove('show');
+                            }, 5000);
+                        } else {
+                            alert('Sorry, there was an error sending your message. Please try calling us directly.');
+                        }
+                    } catch (error) {
+                        console.error('Form submission error:', error);
+                        alert('Sorry, there was an error sending your message. Please try calling us directly at +91 7418 167 906');
+                    } finally {
+                        submitButton.textContent = originalText;
+                        submitButton.disabled = false;
+                    }
                 });
             }
         });
